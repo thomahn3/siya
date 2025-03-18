@@ -22,22 +22,22 @@ export default function SubscribeForm() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto pt-8">
-      <div className="text-xl mb-4 place-items-center text-green-600">
+    <div className="pt-4">
+      {/* <div className="text-xl mb-4 place-items-center text-green-600">
         <p>Interested in the application?</p>
         <p>Join the waiting list below.</p>
-      </div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      </div> */}
+      <form onSubmit={handleSubmit} className="flex flex-row gap-2">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
           required
-          className="border bg-white border-white p-2 rounded-lg"
+          className="p-2 pr-8 rounded-lg text-slate-600 bg-slate-100"
         />
-        <button type="submit" className="bg-green-500 text-white p-2 rounded-lg">
-          Subscribe
+        <button type="submit" className="bg-green-500 text-white pl-14 pr-14 rounded-lg">
+          Stay updated
         </button>
       </form>
       {message && <p className="mt-2 text-green-600">{message}</p>}
