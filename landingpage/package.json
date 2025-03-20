@@ -21,6 +21,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "globals": "^16.0.0",
+    "prisma": "^6.5.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "typescript-eslint": "^8.27.0"
