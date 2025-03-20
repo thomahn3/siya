@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 export default function SubscribeForm() {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage("");
 
@@ -19,7 +19,7 @@ export default function SubscribeForm() {
     const data = await res.json();
     setMessage(data.message || "Something went wrong");
     setEmail("");
-  };
+  }
 
   return (
     <div className="pt-4">

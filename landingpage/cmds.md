@@ -7,5 +7,5 @@
 - Stop the databse
 ```brew services stop postgresql```
 
-- Go into postgre
+- Go into postgres
 ```psql -U postgres```

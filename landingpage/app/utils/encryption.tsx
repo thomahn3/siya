@@ -1,23 +1,32 @@
-import crypto from "crypto";
+import crypto from 'crypto';
 
-const SECRET_KEY = process.env.SECRET_KEY;
-const IV_LENGTH = 16; // Initialization Vector size
+const algorithm = 'aes-256-cbc';
+const secretKey = process.env.SECRET_KEY
+    ? crypto.createHash('sha256').update(process.env.SECRET_KEY).digest('base64').substr(0, 32)
+    : (() => { throw new Error('SECRET_KEY is not defined'); })();
+const iv = crypto.randomBytes(16); // Initialization vector
 
+// Function to encrypt an email address
 export function encryptEmail(email: string): string {
-  const iv = crypto.randomBytes(IV_LENGTH);
-  const cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(SECRET_KEY), iv);
-  let encrypted = cipher.update(email, "utf8", "hex");
-  encrypted += cipher.final("hex");
-  return iv.toString("hex") + ":" + encrypted;
+    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+    let encrypted = cipher.update(email, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return `${iv.toString('hex')}:${encrypted}`;
 }
 
+// Function to decrypt an email address
 export function decryptEmail(encryptedEmail: string): string {
-  const parts = encryptedEmail.split(":");
-  const iv = Buffer.from(parts[0], "hex");
-  const encryptedText = Buffer.from(parts[1], "hex");
-  const decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(SECRET_KEY), iv);
-  let decrypted = decipher.update(encryptedText, "hex", "utf8");
-  decrypted += decipher.final("utf8");
-  return decrypted;
+    const [ivHex, encrypted] = encryptedEmail.split(':');
+    const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(ivHex, 'hex'));
+    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
 }
 
+// Example usage
+//const email = 'example@example.com';
+//const encryptedEmail = encryptEmail(email);
+//console.log('Encrypted Email:', encryptedEmail);
+
+//const decryptedEmail = decryptEmail(encryptedEmail);
+//console.log('Decrypted Email:', decryptedEmail);
