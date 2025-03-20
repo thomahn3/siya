@@ -17,6 +17,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, message: "Email subscribed successfully!" });
   } catch (error) {
+    console.error("Subscription error:", error);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
