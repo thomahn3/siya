@@ -34,9 +34,9 @@ export default function SubscribeForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
           required
-          className="p-2 pr-8 flex rounded-lg text-slate-600 bg-slate-100"
+          className="p-2 w-5/8 md:w-1/2 flex rounded-lg text-slate-600 bg-slate-100"
         />
-        <button type="submit" className="bg-green-500 text-white text-sm lg:text-md pl-5 pr-5 md:pl-14 md:pr-14 rounded-lg hover:bg-green-400">
+        <button type="submit" className="bg-green-500 text-white text-sm lg:text-md w-3/8 md:w-1/4 rounded-lg hover:bg-green-400">
           Stay updated
         </button>
       </form>

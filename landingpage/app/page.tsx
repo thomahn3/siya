@@ -12,11 +12,11 @@ export default function Home() {
   return (
     <main className="overflow-x-hidden">
       <Header />
-      <section className="h-[50vh] py-20">
+      <section className="py-10 md:py-20">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col md:flex-row items-center w-full">
         <div className="p-6 md:w-1/2 order-last md:order-first">
-          <div className="ml-10 lg:ml-40">
+          <div className="justify-center items-center lg:ml-40">
           <p className="font-bold text-2xl md:text-4xl">
             Easily find and connect to <br />
             <span className="text-green-500">Services In Your Area.</span>
@@ -29,14 +29,14 @@ export default function Home() {
           </div>
           </div>
         </div>
-        <div className="p-6 md:w-1/2">
-          <p>test</p>
+        <div className="p-6 md:w-1/2 flex justify-center items-center">
+          <img src="/painter_decorating.svg" alt="painter decorating" className="w-5/8"/>
         </div>
         </div>
       </div>
       </section>
 
-      <section className="py-20 border-t border-gray-200">
+      <section className="py-10 md:py-20 border-t border-gray-200">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col md:flex-row items-center w-full">
         <div className="p-6 md:w-1/2">
@@ -75,11 +75,11 @@ export default function Home() {
       </div>
       </section>
 
-      <section className="py-20 border-t border-gray-200">
+      <section className="py-10 md:py-20 border-t border-gray-200">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col md:flex-row items-center w-full">
         <div className="p-6 md:w-1/2 flex justify-center items-center order-last md:order-first">
-          <img src="/painter_decorating.svg" alt="painter decorating" className="w-3/4"/>
+          <img src="/person_holding_phone.svg" alt="painter decorating" className="w-3/4"/>
         </div>
         <div className="p-6 md:w-1/2">
           <div className="ml-5 mr-5 md:ml-20 md:mr-20">
@@ -113,18 +113,18 @@ export default function Home() {
         </div>
       </div>
       </section>
-      <section className="py-20 border-t border-gray-200">
+      <section className="py-10 md:py-20 border-t border-gray-200">
         <div className="flex flex-col justify-center items-center w-full">
           <div className="flex flex-col md:flex-row items-center w-full">
             <div className="p-6 md:w-1/2 order-last md:order-first">
-              <div className="ml-20 mr-20">
-                <p className="text-xl font-bold mt-2">Want to get in touch?</p>
-                <p>Contact us at <a href="mailto:thomas.e.mahne@gmail.com" className="underline">thomas.e.mahne@gmail.com</a>.</p>
+              <div className="ml-5 mr-5 md:ml-20 md:mr-20">
+                <p className="text-xl font-bold mt-2">Have Further questions?</p>
+                <p>Contact us at <a href="mailto:thomas.e.mahne@gmail.com" className="underline text-green-500">thomas.e.mahne@gmail.com</a>.</p>
                 <p>Our team will get back to you as soon as possible.</p>
               </div>
             </div>
-            <div className="p-6 md:w-1/2">
-              <div className="ml-20 mr-20">
+            <div className="p-6 md:w-1/2 justify-center items-center md:justify-none md:items-none">
+              <div className="ml-5 mr-5 md:ml-20 md:mr-20">
                 <p className="text-green-500">Stay Updated</p>
                 <p className="text-xl font-bold mt-2">Join Our Waiting List</p>
                 <p className="mt-4 text-slate-500">
