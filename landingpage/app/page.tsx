@@ -15,14 +15,14 @@ export default function Home() {
       <section className="h-[50vh] py-20">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col md:flex-row items-center w-full">
-        <div className="p-6 md:w-1/2">
-          <div className="ml-40">
+        <div className="p-6 md:w-1/2 order-last md:order-first">
+          <div className="ml-10 lg:ml-40">
           <p className="font-bold text-2xl md:text-4xl">
             Easily find and connect to <br />
             <span className="text-green-500">Services In Your Area.</span>
           </p>
           <p className="mt-4 text-lg text-slate-500">
-            Connecting customers to service-based businesses <br/> in the local area.
+            Connecting customers to service-based businesses in the local area.
           </p>
           <div className="mt-6">
             <SubscribeForm />
@@ -30,7 +30,7 @@ export default function Home() {
           </div>
         </div>
         <div className="p-6 md:w-1/2">
-          {/* Add content or image here */}
+          <p>test</p>
         </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ export default function Home() {
       <section className="py-20 border-t border-gray-200">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col md:flex-row items-center w-full">
-        <div className="p-6 md:w-1/2 flex justify-center items-center">
+        <div className="p-6 md:w-1/2 flex justify-center items-center order-last md:order-first">
           <img src="/painter_decorating.svg" alt="painter decorating" className="w-3/4"/>
         </div>
         <div className="p-6 md:w-1/2">
