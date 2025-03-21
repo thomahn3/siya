@@ -36,7 +36,7 @@ export default function SubscribeForm() {
           required
           className="p-2 pr-8 rounded-lg text-slate-600 bg-slate-100"
         />
-        <button type="submit" className="bg-green-500 text-white pl-14 pr-14 rounded-lg">
+        <button type="submit" className="bg-green-500 text-white pl-14 pr-14 rounded-lg hover:bg-green-400">
           Stay updated
         </button>
       </form>

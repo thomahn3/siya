@@ -6,6 +6,7 @@ import { CalendarDays } from 'lucide-react';
 import { UsersRound } from 'lucide-react';
 import { CalendarSync } from 'lucide-react';
 import { HandCoins } from 'lucide-react';
+import SubscriberCount from "./ui/count";
 
 export default function Home() {
   return (
@@ -85,7 +86,7 @@ export default function Home() {
           <p className="text-green-500">Business Reach</p>
           <p className="text-xl font-bold mt-2">Increase Discoverability</p>
           <p className="mt-4 text-slate-500">
-            Tired of searching for different businesses to perform a job for you, only to endure the inconvenience of comparing quotes and at this point, you are uncertain of their reliability?
+          Struggling to fill your schedule with reliable clients? Tired of wasting hours on marketing, quoting, and chasing leads? Want to connect directly to customers in your area who need your skills, no cold calls, no ads, just jobs tailored to your expertise?
           </p>
           <div className="mt-6 space-y-6">
             <div className="flex flex-row items-start">
@@ -111,6 +112,30 @@ export default function Home() {
         </div>
         </div>
       </div>
+      </section>
+      <section className="py-20 border-t border-gray-200">
+        <div className="flex flex-col justify-center items-center w-full">
+          <div className="flex flex-col md:flex-row items-center w-full">
+            <div className="p-6 md:w-1/2">
+              <div className="ml-20 mr-20">
+                <p className="text-xl font-bold mt-2">Want to get in touch?</p>
+                
+              </div>
+            </div>
+            <div className="p-6 md:w-1/2">
+              <div className="ml-20 mr-20">
+                <p className="text-green-500">Stay Updated</p>
+                <p className="text-xl font-bold mt-2">Join Our Waiting List</p>
+                <p className="mt-4 text-slate-500">
+                  Be the first to know when we launch the application. Join our waiting list to receive updates on the develepoment of <span className="text-green-500">SIYA</span>.
+                </p>
+                <div className="mt-2">
+                  <SubscribeForm />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
