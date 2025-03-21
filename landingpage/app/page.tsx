@@ -119,7 +119,8 @@ export default function Home() {
             <div className="p-6 md:w-1/2">
               <div className="ml-20 mr-20">
                 <p className="text-xl font-bold mt-2">Want to get in touch?</p>
-                
+                <p>Contact us at <a href="mailto:thomas.e.mahne@gmail.com" className="underline">thomas.e.mahne@gmail.com</a>.</p>
+                <p>Our team will get back to you as soon as possible.</p>
               </div>
             </div>
             <div className="p-6 md:w-1/2">
