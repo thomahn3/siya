@@ -12,4 +12,3 @@ model Subscriber {
   email     String
   createdAt DateTime @default(now())
 }
-
