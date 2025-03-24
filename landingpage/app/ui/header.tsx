@@ -8,6 +8,11 @@ export default function Header() {
                 <div className="ml-4 flex-shrink-0">
                     <Logo/>
                 </div>
+                <div dir='rtl' className='absolute start-0 inset-y-0 mr-10 flex items-center'>
+                    <div className="">
+                        <a href='mailto:SIYAinquiries@gmail.com' className='font-md text-[17px] text-slate-500 hover:text-slate-600'>Contact</a>
+                    </div>
+                </div>
             </div>
         </header>
     );
