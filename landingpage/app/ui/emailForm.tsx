@@ -40,7 +40,7 @@ export default function SubscribeForm() {
           Stay updated
         </button>
       </form>
-      {message && <p className="mt-2 text-green-600">{message}</p>}
+      {message && <p className="mt-2 text-green-500">{message}</p>}
     </div>
   );
 }
