@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -13,8 +13,8 @@ model Subscriber {
   createdAt DateTime @default(now())
 }
 
-model Admin {
+model User {
   id        String   @id @default(uuid())
-  email     String
+  email     String   @unique
   password  String
 }

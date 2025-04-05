@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate && npm run build"
+    "postinstall": "prisma generate && npm run build",
+    "db:migrate": "npx prisma migrate dev"
+  },
+  "prisma": {
+    "schema": "lib/db/schema.prisma"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
