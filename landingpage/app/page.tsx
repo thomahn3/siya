@@ -1,12 +1,12 @@
-import SubscribeForm from "./ui/emailForm";
-import Header from "./ui/header";
+import SubscribeForm from "../components/ui/emailForm";
+import Header from "../components/ui/header";
 import { Waypoints } from 'lucide-react';
 import { UserRoundSearch } from 'lucide-react';
 import { CalendarDays } from 'lucide-react';
 import { UsersRound } from 'lucide-react';
 import { CalendarSync } from 'lucide-react';
 import { HandCoins } from 'lucide-react';
-import SubscriberCount from "./ui/count";
+import SubscriberCount from "../components/ui/count";
 
 export default function Home() {
   return (

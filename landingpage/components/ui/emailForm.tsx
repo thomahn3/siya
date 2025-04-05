@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function SubscribeForm() {
   const [email, setEmail] = useState<string>("");
@@ -28,17 +30,17 @@ export default function SubscribeForm() {
         <p>Join the waiting list below.</p>
       </div> */}
       <form onSubmit={handleSubmit} className="flex flex-row gap-2">
-        <input
+        <Input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
           required
-          className="p-2 w-5/8 md:w-1/2 flex rounded-lg text-slate-600 bg-slate-100"
+          className="p-2 w-5/8 md:w-1/2 flex rounded-lg border-none text-slate-600 bg-slate-100"
         />
-        <button type="submit" className="bg-green-500 text-white text-sm lg:text-md w-3/8 md:w-1/4 rounded-lg hover:bg-green-400">
+        <Button type="submit" className="w-3/8 md:w-1/4 rounded-lg hover:bg-green-400">
           Stay updated
-        </button>
+        </Button>
       </form>
       {message && <p className="mt-2 text-green-600">{message}</p>}
     </div>

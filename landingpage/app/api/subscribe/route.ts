@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import { encryptEmail } from "../../utils/encryption";
+import { encryptEmail } from "../../../utils/encryption";
 
 const prisma = new PrismaClient();
 
