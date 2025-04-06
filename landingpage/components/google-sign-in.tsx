@@ -1,21 +1,21 @@
 import { signIn } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { GithubIcon } from "@/components/ui/github";
+import { GoogleIcon } from "@/components/ui/google";
 
-const GithubSignIn = () => {
+const GoogleSignIn = () => {
   return (
     <form
       action={async () => {
         "use server";
-        await signIn("github");
+        await signIn("google");
       }}
     >
       <Button className="w-full" variant="outline">
-        <GithubIcon />
-        Continue with GitHub
+        <GoogleIcon />
+        Continue with Google
       </Button>
     </form>
   );
 };
 
-export { GithubSignIn };
+export { GoogleSignIn };

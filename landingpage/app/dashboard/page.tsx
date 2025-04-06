@@ -5,7 +5,7 @@ import { SignOut } from '@/components/sign-out';
 const Page = async () => {
 
     const session = await auth();
-    if (!session) redirect('/login');
+    if (!session) redirect('/sign-in');
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
