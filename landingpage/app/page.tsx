@@ -1,4 +1,4 @@
-import SubscribeForm from "@/components/ui/emailForm";
+import SubscribeForm from "@/components/emailForm";
 import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
 import { UserRoundSearch } from 'lucide-react';

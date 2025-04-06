@@ -1,21 +1,24 @@
 'use server';
 
+import { executeAction } from './executeActions';
 import db from './db/db';
 import { schema } from './schema';
 
-export const signUp = async (formData: FormData) => {
-  const email = formData.get('email');
-  const password = formData.get('password');
-  const validatedData = schema.parse({ email, password });
-  try {
-    await db.user.create({
-      data: {
-        email: validatedData.email.toLowerCase(),
-        password: validatedData.password,
-      }
-    })
-    return { success: true };
-  } catch (error) {
-    throw new Error("Error Signing Up")
-  }
-}
+const signUp = async (formData: FormData) => {
+  return executeAction({
+    actionFn: async () => {
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const validatedData = schema.parse({ email, password });
+      await db.user.create({
+        data: {
+          email: validatedData.email.toLocaleLowerCase(),
+          password: validatedData.password,
+        },
+      });
+    },
+    successMessage: "Signed up successfully",
+  });
+};
+
+export { signUp };

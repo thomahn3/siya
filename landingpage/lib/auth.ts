@@ -1,55 +1,51 @@
-import NextAuth from 'next-auth';
-import Credentials from "next-auth/providers/credentials";
-import Github from "next-auth/providers/github";
+import { v4 as uuid } from "uuid";
+import { encode as defaultEncode } from "next-auth/jwt";
+
 import db from "@/lib/db/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { schema } from '@/lib/schema';
-import { v4 as uuid } from 'uuid';
-import {encode as DefaultEncode} from "next-auth/jwt";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import GitHub from "next-auth/providers/github";
+import { schema } from "@/lib/schema";
+import type { Adapter } from "next-auth/adapters";
 
-const adapter = PrismaAdapter(db as any);
+const adapter = PrismaAdapter(db);
 
-
-export const { auth, handlers, signIn, signOut } = NextAuth({
+export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter,
   providers: [
-    Github,
+    GitHub,
     Credentials({
-      name: "Credentials",
       credentials: {
         email: {},
         password: {},
       },
-
-      // Logic to check if user exists and if it is correct
       authorize: async (credentials) => {
-
         const validatedCredentials = schema.parse(credentials);
-        
+
         const user = await db.user.findFirst({
           where: {
             email: validatedCredentials.email,
             password: validatedCredentials.password,
-          }
-        })
+          },
+        });
 
         if (!user) {
-          throw new Error("Invalid credentials");
+          throw new Error("Invalid credentials.");
         }
+
         return user;
-      }
+      },
     }),
   ],
-
   callbacks: {
     async jwt({ token, account }) {
-      if (account?.provider === 'credentials') {
+      if (account?.provider === "credentials") {
         token.credentials = true;
       }
       return token;
-    }
+    },
   },
-
   jwt: {
     encode: async function (params) {
       if (params.token?.credentials) {
@@ -71,7 +67,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
         return sessionToken;
       }
-      return DefaultEncode(params);
+      return defaultEncode(params);
     },
   },
 });

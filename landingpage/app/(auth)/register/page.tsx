@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { GithubSignIn } from "@/components/ui/github-sign-in";
+import { GithubSignIn } from "@/components/github-sign-in";
 import { auth } from "@/lib/auth";
 
 const Page = async () => {
@@ -34,7 +34,7 @@ const Page = async () => {
           "use server";
           const res = await signUp(formData);
           if (res.success) {
-            redirect("/sign-in");
+            redirect("/login");
           }
         }}
       >

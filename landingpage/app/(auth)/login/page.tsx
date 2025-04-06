@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 
 import { signIn } from "@/lib/auth";
-import { GithubSignIn } from "@/components/ui/github-sign-in";
+import { GithubSignIn } from "@/components/github-sign-in";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { executeAction } from "@/lib/executeActions";
