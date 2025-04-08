@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 import Header from "@/components/ui/header";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Services In Your Area",
 };
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;

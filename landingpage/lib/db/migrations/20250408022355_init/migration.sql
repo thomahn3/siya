@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN "abn" TEXT;
+ALTER TABLE "User" ADD COLUMN "phone" TEXT;
+ALTER TABLE "User" ADD COLUMN "phoneVerified" DATETIME;
+ALTER TABLE "User" ADD COLUMN "profileCompleted" BOOLEAN DEFAULT false;
+ALTER TABLE "User" ADD COLUMN "suburb" TEXT;

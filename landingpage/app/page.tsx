@@ -1,17 +1,31 @@
 import SubscribeForm from "@/components/emailForm";
-import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
 import { UserRoundSearch } from 'lucide-react';
 import { CalendarDays } from 'lucide-react';
 import { UsersRound } from 'lucide-react';
 import { CalendarSync } from 'lucide-react';
 import { HandCoins } from 'lucide-react';
+import Header from "@/components/ui/header";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 export default function Home() {
   return (
     <main className="overflow-x-hidden">
-      <Header />
+      <Header>
+          <div className='space-x-2'>
+            <Button asChild variant="secondary" className='rounded-full'>
+                <Link href='/sign-in'>Sign In</Link>
+            </Button>
+            <Button asChild variant="default" className='rounded-full'>
+                <Link href='/sign-up'>Sign Up</Link>
+            </Button>
+          </div>
+          <Button asChild variant="headerLink">
+            <Link href='mailto:SIYAinquiries@gmail.com'>Contact</Link>
+          </Button>
+        </Header>
       <section className="py-10 lg:py-20">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col lg:flex-row items-center w-full">
