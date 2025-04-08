@@ -20,6 +20,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
+import { profileSetup } from '@/lib/actions'
   
 
 const Page = async () => {
@@ -54,7 +55,16 @@ return (
                     </CardHeader>
                     <CardContent>
                         <div className="grid gap-6">
-                            <form className="space-y-4">
+                            <form 
+                                className="space-y-4"
+                                action={async (formData) => {
+                                    "use server";
+                                    const res = await profileSetup(formData);
+                                    if (res.success) {
+                                        redirect("/dashboard");
+                                    }
+                                }}
+                                >
                                 <div className='grid gap-2'>
                                 <Label htmlFor="name">Name</Label>
                                 <Input 
@@ -69,13 +79,12 @@ return (
                                 <Label htmlFor="email">Email Address</Label>
                                 <Input
                                     name="email"
-                                    placeholder="Email"
                                     type="email"
                                     defaultValue={email || ""}
-                                    readOnly={!!email}
+                                    readOnly
                                     required
                                     autoComplete="email"
-                                    className={clsx(email ? "text-gray-500" : "text-black")}
+                                    className="text-gray-500"
                                 />
                                 </div>
                                 <div className='grid gap-2'>
@@ -110,25 +119,24 @@ return (
                                     type="text"
                                     pattern="\d{11}"
                                     title="ABN must be 11 digits"
-                                    required
                                     autoComplete="abn"
                                 />
                                 </div>
                                 <div className='grid gap-2'>
                                 <Label htmlFor="moneyOrPosts">Why are you signing up?</Label>
-                                <Select required>
+                                <Select name="appUseType" required>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Entiy Type" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="personal">Offer services</SelectItem>
-                                        <SelectItem value="business">Request services</SelectItem>
+                                        <SelectItem value="offer">Offer services</SelectItem>
+                                        <SelectItem value="request">Request services</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 </div>
                                 <div className='grid gap-2'>
-                                <Label htmlFor="personalOrBusiness">Personal or Business</Label>
-                                <Select required>
+                                <Label htmlFor="personalOrBusiness">Using this personally or for business?</Label>
+                                <Select name="entityType" required>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Entiy Type" />
                                     </SelectTrigger>

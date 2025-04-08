@@ -8,7 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { GoogleSignIn } from "@/components/google-sign-in";
 import Header from "@/components/ui/header";
-import { profileSetup } from "@/lib/actions";
+import { checkProfileSetup } from "@/lib/actions";
 import {
   Card,
   CardHeader,
@@ -22,9 +22,9 @@ import Logo from "@/components/ui/logo";
 
 const Page = async () => {
   const session = await auth();
-  if (session && !(await profileSetup(session.user?.id))) {
-    redirect("/sign-up/profile-setup");
-  } else if (session && (await profileSetup(session.user?.id))) {
+  if (session && !(await checkProfileSetup(session.user?.id))) {
+    redirect("/profile-setup");
+  } else if (session && (await checkProfileSetup(session.user?.id))) {
     redirect("/dashboard");
   }
 
@@ -58,7 +58,7 @@ const Page = async () => {
                   "use server";
                   const res = await signUp(formData);
                   if (res.success) {
-                    redirect("/sign-up/profile-setup");
+                    redirect("/profile-setup");
                   }
                 }}
               >

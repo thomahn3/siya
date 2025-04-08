@@ -21,8 +21,10 @@ model User {
   password      String?
   phone         String?
   phoneVerified DateTime?
-  suburb        String?
+  postcode      String?
   abn           String?
+  appUseType    String?
+  entityType   String?
   profileCompleted Boolean? @default(false)
   image         String?
   accounts      Account[]
