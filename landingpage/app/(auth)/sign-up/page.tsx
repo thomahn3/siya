@@ -1,5 +1,3 @@
-import { auth } from "@/lib/auth";
-import { signIn } from "@/lib/auth";
 import { GithubSignIn } from "@/components/github-sign-in";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +6,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { GoogleSignIn } from "@/components/google-sign-in";
 import Header from "@/components/ui/header";
-import { checkProfileSetup } from "@/lib/actions";
 import {
   Card,
   CardHeader,
@@ -19,19 +16,22 @@ import {
 import { Label } from "@/components/ui/label";
 import { signUp } from "@/lib/actions";
 import Logo from "@/components/ui/logo";
+import { auth } from '@/lib/auth'
+import { checkProfileSetup } from '@/lib//actions';
 
 const Page = async () => {
+  
   const session = await auth();
   if (session && !(await checkProfileSetup(session.user?.id))) {
-    redirect("/profile-setup");
+    redirect("/profile-setup")
   } else if (session && (await checkProfileSetup(session.user?.id))) {
-    redirect("/dashboard");
+    redirect("/dashboard")
   }
 
   return (
     <main className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <Logo />
+        <Link href={"/"} className="self-center"><Logo /></Link>
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Sign Up</CardTitle>

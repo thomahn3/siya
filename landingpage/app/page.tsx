@@ -8,9 +8,18 @@ import { HandCoins } from 'lucide-react';
 import Header from "@/components/ui/header";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { auth } from '@/lib/auth'
+import { redirect } from "next/navigation";
+import { checkProfileSetup } from "@/lib/actions";
+
+export default async function Home() {
+  
+  const session = await auth();
+  if (session && (await checkProfileSetup(session.user?.id))) {
+    redirect("/dashboard")
+  }
 
 
-export default function Home() {
   return (
     <main className="overflow-x-hidden">
       <Header>

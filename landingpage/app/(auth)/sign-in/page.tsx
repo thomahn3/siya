@@ -1,5 +1,4 @@
-import { auth } from "@/lib/auth";
-import { signIn } from "@/lib/auth";
+import { auth, signIn } from "@/lib/auth";
 import { GithubSignIn } from "@/components/github-sign-in";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,8 +6,6 @@ import { executeAction } from "@/lib/executeActions";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { GoogleSignIn } from "@/components/google-sign-in";
-import Header from "@/components/ui/header";
-import { checkProfileSetup } from "@/lib/actions";
 import {
   Card,
   CardHeader,
@@ -18,19 +15,21 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/logo";
+import { checkProfileSetup } from "@/lib/actions";
 
 const Page = async () => {
+
   const session = await auth();
-  if (session && !(await checkProfileSetup(session.user?.id))) {
-    redirect("/sign-up/profile-setup");
-  } else if (session && (await checkProfileSetup(session.user?.id))) {
-    redirect("/dashboard");
-  }
+    if (session && !(await checkProfileSetup(session.user?.id))) {
+      redirect("/profile-setup")
+    } else if (session && (await checkProfileSetup(session.user?.id))) {
+      redirect("/dashboard")
+    }
 
   return (
     <main className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <Logo />
+          <Link className="self-center" href={"/"}><Logo /></Link>
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-xl">Welcome back</CardTitle>
@@ -53,14 +52,20 @@ const Page = async () => {
               {/* Email/Password Sign In */}
               <form
                 className="space-y-4"
-                action={async (formData) => {
-                  "use server";
-                  await executeAction({
-                    actionFn: async () => {
+                action={
+                  async (formData) => {
+                    "use server";
+                    try {
                       await signIn("credentials", formData);
-                    },
-                  });
-                }}
+                    } catch (error) {
+                      if (error instanceof Error) {
+                        var errorType = true
+                      } else {
+                        console.error("An unexpected error occurred:", error);
+                      }
+                    }
+                  }
+                }
               >
                 <div className="grid gap-6">
                   <div className="grid gap-3">

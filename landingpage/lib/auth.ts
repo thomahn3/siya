@@ -8,6 +8,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import { schema } from "@/lib/schema";
 import Google from "next-auth/providers/google"
+import { compare } from '@/utils/encryption';
 
 const adapter = PrismaAdapter(db);
 
@@ -27,12 +28,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const user = await db.user.findFirst({
           where: {
             email: validatedCredentials.email,
-            password: validatedCredentials.password,
           },
         });
 
         if (!user) {
-          throw new Error("Invalid credentials.");
+          throw new Error("Invalid email or password");
+        }
+
+        if (!user.password) {
+          throw new Error("Password not set");
+        }
+
+        const isPasswordValid = compare(
+          validatedCredentials.password,
+          user.password
+        );
+
+        if (!isPasswordValid) {
+          throw new Error("Invalid email or password");
         }
 
         return user;

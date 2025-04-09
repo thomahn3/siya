@@ -4,6 +4,7 @@ import { executeAction } from './executeActions';
 import db from './db/db';
 import { schema, profileSetupSchema } from './schema';
 import { auth, signIn } from '@/lib/auth';
+import { encrypt } from '@/utils/encryption';
 
 
 export const signUp = async (formData: FormData) => {
@@ -12,12 +13,14 @@ export const signUp = async (formData: FormData) => {
       const email = formData.get("email");
       const password = formData.get("password");
       const validatedData = schema.parse({ email, password });
+      const encryptedPassword = await encrypt(validatedData.password);
       await db.user.create({
         data: {
           email: validatedData.email.toLocaleLowerCase(),
-          password: validatedData.password,
+          password: encryptedPassword,
         },
       });
+      console.log("User created:", validatedData.email);
       await signIn("credentials", formData);
     },
     successMessage: "Signed up successfully",
@@ -37,12 +40,10 @@ export const checkProfileSetup = async (id: string | undefined) => {
 };
 
 export const profileSetup = async (formData: FormData) => {
-  console.log("Profile setup action called"); // Debugging
   return executeAction({
     actionFn: async () => {
       const session = await auth();
       if (session) {
-        console.log("Session found:", session); // Debugging
         const id = session.user?.id;
         const name = formData.get("name");
         const phone = formData.get("phone");
@@ -50,12 +51,8 @@ export const profileSetup = async (formData: FormData) => {
         const abn = formData.get("abn");
         const appUseType = formData.get("appUseType");
         const entityType = formData.get("entityType");
-        console.log("Form data:", { id, name, phone, postcode, abn, appUseType, entityType });
-        console.log(name) // Debugging
 
         const validatedData = profileSetupSchema.parse({ id, name, phone, postcode, abn, appUseType, entityType });
-
-        console.log("validated data", validatedData); // Debugging
 
         await db.user.update({
           where: { id: id },
