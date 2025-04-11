@@ -18,6 +18,7 @@ import { signUp } from "@/lib/actions";
 import Logo from "@/components/ui/logo";
 import { auth } from '@/lib/auth'
 import { checkProfileSetup } from '@/lib//actions';
+import SignUpForm from "@/components/signUpForm";
 
 const Page = async () => {
   
@@ -52,42 +53,7 @@ const Page = async () => {
               </div>
 
               {/* Email/Password Sign In */}
-              <form
-                className="space-y-4"
-                action={async (formData) => {
-                  "use server";
-                  const res = await signUp(formData);
-                  if (res.success) {
-                    redirect("/profile-setup");
-                  }
-                }}
-              >
-                <div className="grid gap-6">
-                  <div className="grid gap-3">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      name="email"
-                      placeholder="Email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                    />
-                  </div>
-                  <div className="grid gap-3">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      required
-                      autoComplete="current-password"
-                    />
-                  </div>
-                  <Button className="w-full" type="submit">
-                    Sign Up
-                  </Button>
-                </div>
-              </form>
+              <SignUpForm />
 
               <div className="text-center">
                 <Button asChild variant="link">

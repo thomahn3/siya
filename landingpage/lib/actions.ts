@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { executeAction } from './executeActions';
 import db from './db/db';
@@ -8,24 +8,50 @@ import { encrypt } from '@/utils/encryption';
 
 
 export const signUp = async (formData: FormData) => {
-  return executeAction({
-    actionFn: async () => {
-      const email = formData.get("email");
-      const password = formData.get("password");
-      const validatedData = schema.parse({ email, password });
-      const encryptedPassword = await encrypt(validatedData.password);
-      await db.user.create({
-        data: {
-          email: validatedData.email.toLocaleLowerCase(),
-          password: encryptedPassword,
-        },
-      });
-      console.log("User created:", validatedData.email);
-      await signIn("credentials", formData);
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const validatedData = schema.parse({ email, password });
+  const encryptedPassword = await encrypt(validatedData.password);
+  try {
+  const user = await db.user.findFirst({
+    where: {
+      email: validatedData.email,
     },
-    successMessage: "Signed up successfully",
   });
+  if (user) {
+    console.log("User Aready Exists")
+    throw new Error('User already exists', { cause: { server_message: "User already exists." }})
+  } else {
+    await db.user.create({
+      data: {
+        email: validatedData.email.toLocaleLowerCase(),
+        password: encryptedPassword,
+      },
+    });
+    await signIn('credentials', formData);
+  }
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.cause && typeof e.cause === "object" && "server_message" in e.cause) {
+        throw new Error(typeof e.cause.server_message === "string" ? e.cause.server_message : "An unknown error occurred")
+      }
+    }
+  }
 };
+
+export const signInServer = async (formdata: FormData) => {
+  try {
+    const result = await signIn('credentials', formdata)
+    return result;
+  } catch (e) {
+    if (e instanceof Error) {
+      if (e.cause && typeof e.cause === "object" && "server_message" in e.cause) {
+        throw new Error(typeof e.cause.server_message === "string" ? e.cause.server_message : "An unknown error occurred")
+      }
+    }
+    
+  }
+}
 
 export const checkProfileSetup = async (id: string | undefined) => {
     const user = await db.user.findUnique({

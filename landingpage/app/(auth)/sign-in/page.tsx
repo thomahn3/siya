@@ -1,8 +1,6 @@
-import { auth, signIn } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { GithubSignIn } from "@/components/github-sign-in";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { executeAction } from "@/lib/executeActions";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { GoogleSignIn } from "@/components/google-sign-in";
@@ -13,12 +11,14 @@ import {
   CardContent,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/logo";
 import { checkProfileSetup } from "@/lib/actions";
+import SignInForm from "@/components/signInForm";
+
+
 
 const Page = async () => {
-
+  
   const session = await auth();
     if (session && !(await checkProfileSetup(session.user?.id))) {
       redirect("/profile-setup")
@@ -50,57 +50,7 @@ const Page = async () => {
               </div>
 
               {/* Email/Password Sign In */}
-              <form
-                className="space-y-4"
-                action={
-                  async (formData) => {
-                    "use server";
-                    try {
-                      await signIn("credentials", formData);
-                    } catch (error) {
-                      if (error instanceof Error) {
-                        var errorType = true
-                      } else {
-                        console.error("An unexpected error occurred:", error);
-                      }
-                    }
-                  }
-                }
-              >
-                <div className="grid gap-6">
-                  <div className="grid gap-3">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      name="email"
-                      placeholder="Email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                    />
-                  </div>
-                  <div className="grid gap-3">
-                    <div className="flex items-center">
-                      <Label htmlFor="password">Password</Label>
-                      <a
-                        href="#"
-                        className="ml-auto text-sm underline-offset-4 hover:underline"
-                      >
-                        Forgot your password?
-                      </a>
-                    </div>
-                    <Input
-                      name="password"
-                      placeholder="Password"
-                      type="password"
-                      required
-                      autoComplete="current-password"
-                    />
-                  </div>
-                  <Button className="w-full" type="submit">
-                    Sign In
-                  </Button>
-                </div>
-              </form>
+              <SignInForm />
 
               <div className="text-center">
                 <Button asChild variant="link">

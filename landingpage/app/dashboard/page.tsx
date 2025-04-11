@@ -1,11 +1,17 @@
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { SignOut } from '@/components/sign-out';
+import { checkProfileSetup } from '@/lib/actions';
+
 
 const Page = async () => {
 
     const session = await auth();
-    if (!session) redirect('/sign-in');
+    if (!session) {
+        redirect('/sign-in')
+    } //else if (session && !(await checkProfileSetup(session.user?.id))) {
+        //redirect("/profile-setup")
+    //}
 
     return (
         <div className="flex flex-col min-h-[calc(100vh-4rem)] items-center justify-center py-2">

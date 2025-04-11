@@ -16,7 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter,
   providers: [
     GitHub,
-    Google,
+    Google({allowDangerousEmailAccountLinking: true}),
     Credentials({
       credentials: {
         email: {},
@@ -32,11 +32,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
 
         if (!user) {
-          throw new Error("Invalid email or password");
+          throw new Error('No user', { cause: { server_message: "Invalid email or password" }});
         }
 
         if (!user.password) {
-          throw new Error("Password not set");
+          throw new Error('No password', { cause: { server_message: "This email was used to sign in with a 3rd party app" }});
         }
 
         const isPasswordValid = compare(
@@ -45,7 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         );
 
         if (!isPasswordValid) {
-          throw new Error("Invalid email or password");
+          throw new Error('incorrect password', { cause: { server_message: "Invalid email or password" }});
         }
 
         return user;
@@ -66,7 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const sessionToken = uuid();
 
         if (!params.token.sub) {
-          throw new Error("No user ID found in token");
+          throw new Error('No user ID found in token', { cause: { server_message: "Token is missing user ID" }});
         }
 
         const createdSession = await adapter?.createSession?.({
@@ -76,7 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
 
         if (!createdSession) {
-          throw new Error("Failed to create session");
+          throw new Error('Failed to create session', { cause: { server_message: "Database session creation failed" }});
         }
 
         return sessionToken;
