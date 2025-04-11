@@ -6,7 +6,7 @@ const GithubSignIn = () => {
   return (
     <form
       action={async () => {
-        "use server";
+        "use server"
         await signIn("github");
       }}
     >

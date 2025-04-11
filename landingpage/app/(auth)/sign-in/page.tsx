@@ -14,6 +14,7 @@ import {
 import Logo from "@/components/ui/logo";
 import { checkProfileSetup } from "@/lib/actions";
 import SignInForm from "@/components/signInForm";
+import OAuthForm from "@/components/oAuthForm";
 
 
 
@@ -39,10 +40,8 @@ const Page = async () => {
           </CardHeader>
           <CardContent>
             <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
-                <GithubSignIn />
-                <GoogleSignIn />
-              </div>
+              <OAuthForm />
+                
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
                   Or continue with

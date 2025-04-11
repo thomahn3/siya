@@ -20,7 +20,7 @@ const [state, formAction, pending] = useActionState(
 
     async (state: { message: string }, formData: FormData) => {
         try {
-          await signInServer(formData);
+          await signInServer('credentials', formData);
           router.push('/dashboard')
           return { message: '' }; // Clear the error message on success
         } catch (e) {

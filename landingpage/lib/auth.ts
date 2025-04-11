@@ -3,7 +3,7 @@ import { encode as defaultEncode } from "next-auth/jwt";
 
 import db from "@/lib/db/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import { schema } from "@/lib/schema";
@@ -52,6 +52,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  pages: {
+    signIn: "/sign-in"
+  },
   callbacks: {
     async jwt({ token, account }) {
       if (account?.provider === "credentials") {
@@ -59,6 +62,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token;
     },
+    async signIn({ user, account, profile, email, credentials }) 
+      {
+      if(account?.error) {
+         throw new Error('custom error to the client')
+      }
+      return true
+   },
   },
   jwt: {
     encode: async function (params) {

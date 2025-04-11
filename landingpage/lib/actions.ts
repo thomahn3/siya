@@ -39,19 +39,18 @@ export const signUp = async (formData: FormData) => {
   }
 };
 
-export const signInServer = async (formdata: FormData) => {
+export const signInServer = async (type: string, formdata?: FormData) => {
   try {
-    const result = await signIn('credentials', formdata)
+    const result = await signIn(type, formdata);
     return result;
   } catch (e) {
     if (e instanceof Error) {
       if (e.cause && typeof e.cause === "object" && "server_message" in e.cause) {
-        throw new Error(typeof e.cause.server_message === "string" ? e.cause.server_message : "An unknown error occurred")
+        throw new Error(typeof e.cause.server_message === "string" ? e.cause.server_message : "An unknown error occurred");
       }
     }
-    
   }
-}
+};  
 
 export const checkProfileSetup = async (id: string | undefined) => {
     const user = await db.user.findUnique({
