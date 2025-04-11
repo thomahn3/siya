@@ -1,10 +1,8 @@
-import { GithubSignIn } from "@/components/github-sign-in";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { executeAction } from "@/lib/executeActions";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { GoogleSignIn } from "@/components/google-sign-in";
 import Header from "@/components/ui/header";
 import {
   Card,
@@ -19,6 +17,7 @@ import Logo from "@/components/ui/logo";
 import { auth } from '@/lib/auth'
 import { checkProfileSetup } from '@/lib//actions';
 import SignUpForm from "@/components/signUpForm";
+import OAuthForm from "@/components/oAuthForm";
 
 const Page = async () => {
   
@@ -42,10 +41,7 @@ const Page = async () => {
           </CardHeader>
           <CardContent>
             <div className="grid gap-6">
-              <div className="flex flex-col gap-4">
-                <GithubSignIn />
-                <GoogleSignIn />
-              </div>
+              <OAuthForm />
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
                   Or continue with

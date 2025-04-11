@@ -1,9 +1,7 @@
 import { auth } from "@/lib/auth";
-import { GithubSignIn } from "@/components/github-sign-in";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { GoogleSignIn } from "@/components/google-sign-in";
 import {
   Card,
   CardHeader,
