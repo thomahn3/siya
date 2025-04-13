@@ -1,7 +1,7 @@
 'use client';
 
 import WorkButton from "@/components/animata/button/work-button";
-import SubscribeForm from "@/components/ui/emailForm";
+import SubscribeForm from "@/components/emailForm";
 import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
 import { UserRoundSearch } from 'lucide-react';
@@ -10,6 +10,12 @@ import { UsersRound } from 'lucide-react';
 import { CalendarSync } from 'lucide-react';
 import { HandCoins } from 'lucide-react';
 import { motion } from "motion/react"
+import { Button } from "@/components/ui/button";
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { auth } from '@/lib/auth'
+import { checkProfileSetup } from "@/lib/actions";
+
 
 export default async function Home() {
   
