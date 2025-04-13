@@ -1,12 +1,15 @@
-import SubscribeForm from "./ui/emailForm";
-import Header from "./ui/header";
+'use client';
+
+import WorkButton from "@/components/animata/button/work-button";
+import SubscribeForm from "@/components/ui/emailForm";
+import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
 import { UserRoundSearch } from 'lucide-react';
 import { CalendarDays } from 'lucide-react';
 import { UsersRound } from 'lucide-react';
 import { CalendarSync } from 'lucide-react';
 import { HandCoins } from 'lucide-react';
-import SubscriberCount from "./ui/count";
+import { motion } from "motion/react"
 
 export default function Home() {
   return (
@@ -17,10 +20,11 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row items-center w-full">
         <div className="p-6 lg:w-1/2 order-last lg:order-first">
           <div className="justify-center items-center xl:ml-40">
-          <p className="font-bold text-2xl lg:text-4xl">
-            Easily find and connect to <br />
-            <span className="text-green-500">Services In Your Area.</span>
+          <div className="font-bold text-2xl lg:text-4xl">
+          <p>
+            Easily find and connect to <br /> <span className="text-green-500">Services In Your Area.</span>
           </p>
+          </div>
           <p className="mt-4 text-lg text-slate-500">
             Connecting customers to service-based businesses in the local area.
           </p>
@@ -47,24 +51,42 @@ export default function Home() {
             Tired of searching for different businesses to perform a job for you, only to endure the inconvenience of comparing quotes and being uncertain of their reliability?
           </p>
           <div className="mt-6 space-y-6 flex flex-col">
-            <div className="flex flex-row items-start">
-            <Waypoints size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
-            <p className="text-slate-500">
-              We facilitate the seamless connection between customers and businesses, offering a swift and effortless solution to the complexities of finding services.
-            </p>
-            </div>
-            <div className="flex flex-row items-start">
-            <UserRoundSearch size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
-            <p className="text-slate-500">
-              Access local experts within your vicinity, supporting local businesses whilst ensuring the quality of the service is exceptional.
-            </p>
-            </div>
-            <div className="flex flex-row items-start">
-            <CalendarDays size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
-            <p className="text-slate-500">
-              Customers can conveniently book and schedule services directly through the application, offering options to select preferred times and dates; enhancing customer convenience.
-            </p>
-            </div>
+            <motion.div
+              className="flex flex-row items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Waypoints size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
+              <p className="text-slate-500">
+                We facilitate the seamless connection between customers and businesses, offering a swift and effortless solution to the complexities of finding services.
+              </p>
+            </motion.div>
+            <motion.div
+              className="flex flex-row items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <UserRoundSearch size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
+              <p className="text-slate-500">
+                Access local experts within your vicinity, supporting local businesses whilst ensuring the quality of the service is exceptional.
+              </p>
+            </motion.div>
+            <motion.div
+              className="flex flex-row items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <CalendarDays size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
+              <p className="text-slate-500">
+                Customers can conveniently book and schedule services directly through the application, offering options to select preferred times and dates; enhancing customer convenience.
+              </p>
+            </motion.div>
           </div>
           </div>
         </div>
@@ -89,24 +111,42 @@ export default function Home() {
             Struggling to fill your schedule with reliable clients? Tired of wasting hours on marketing, quoting, and chasing leads? Want to connect directly to customers in your area who need your skills, no cold calls, no ads, just jobs tailored to your expertise?
           </p>
           <div className="mt-6 space-y-6">
-            <div className="flex flex-row items-start">
-            <UsersRound size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
-            <p className="text-slate-500">
-              Service providers gain access to a large pool of potential customers within their local vicinity, facilitating businesses in attracting new clients without the necessity of extensive advertising campaigns.
-            </p>
-            </div>
-            <div className="flex flex-row items-start">
-            <CalendarSync size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
-            <p className="text-slate-500">
-              The application automates the customer connection process, thereby reducing the time and budget allocated to marketing, quotation, and scheduling; enabling businesses to focus on delivering their services rather than managing leads.
-            </p>
-            </div>
-            <div className="flex flex-row items-start">
-            <HandCoins size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
-            <p className="text-slate-500">
-              Service providers have the opportunity to accept additional work commitments during evenings, weekends, or public holidays, thereby enhancing their earning potential and offering flexibility.
-            </p>
-            </div>
+            <motion.div
+              className="flex flex-row items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5 }}
+            >
+              <UsersRound size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
+              <p className="text-slate-500">
+                Service providers gain access to a large pool of potential customers within their local vicinity, facilitating businesses in attracting new clients without the necessity of extensive advertising campaigns.
+              </p>
+            </motion.div>
+            <motion.div
+              className="flex flex-row items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <CalendarSync size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
+              <p className="text-slate-500">
+                The application automates the customer connection process, thereby reducing the time and budget allocated to marketing, quotation, and scheduling; enabling businesses to focus on delivering their services rather than managing leads.
+              </p>
+            </motion.div>
+            <motion.div
+              className="flex flex-row items-start"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <HandCoins size={24} strokeWidth={2} className="mr-4 flex-none place-self-center" />
+              <p className="text-slate-500">
+                Service providers have the opportunity to accept additional work commitments during evenings, weekends, or public holidays, thereby enhancing their earning potential and offering flexibility.
+              </p>
+            </motion.div>
           </div>
           </div>
         </div>
