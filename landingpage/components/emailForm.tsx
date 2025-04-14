@@ -38,7 +38,7 @@ export default function SubscribeForm() {
           required
           className="p-2 w-5/8 md:w-1/2 flex rounded-lg border-none text-slate-600 bg-slate-100"
         />
-        <Button type="submit" className="w-3/8 md:w-1/4 rounded-lg hover:bg-green-400">
+        <Button variant="default" className="w-3/8 md:w-1/4 rounded-lg cursor-pointer">
           Stay updated
         </Button>
       </form>

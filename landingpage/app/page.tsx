@@ -1,4 +1,4 @@
-import WorkButton from "@/components/animata/button/work-button";
+
 import SubscribeForm from "@/components/emailForm";
 import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
@@ -16,6 +16,7 @@ import { checkProfileSetup } from "@/lib/actions";
 import FadeInLeft from "@/components/fade-in-left";
 
 
+
 export default async function Home() {
 
   const session = await auth();
@@ -28,7 +29,7 @@ export default async function Home() {
     <main className="overflow-x-hidden">
       <Header>
           <div className='space-x-2'>
-            <Button asChild variant="secondary" className='rounded-full'>
+            <Button asChild variant="default" className='rounded-full'>
                 <Link href='/sign-in'>Sign In</Link>
             </Button>
             <Button asChild variant="default" className='rounded-full'>
