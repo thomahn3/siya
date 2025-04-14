@@ -15,8 +15,16 @@ const adapter = PrismaAdapter(db);
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter,
   providers: [
-    GitHub,
-    Google({allowDangerousEmailAccountLinking: true}),
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID as string,
+      clientSecret: process.env.AUTH_GITHUB_SECRET as string,
+
+    }),
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID as string,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
+      allowDangerousEmailAccountLinking: true,
+    }),
     Credentials({
       credentials: {
         email: {},
