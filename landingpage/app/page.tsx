@@ -1,5 +1,3 @@
-'use client';
-
 import WorkButton from "@/components/animata/button/work-button";
 import SubscribeForm from "@/components/emailForm";
 import Header from "@/components/ui/header";
@@ -18,7 +16,7 @@ import { checkProfileSetup } from "@/lib/actions";
 
 
 export default async function Home() {
-  
+
   const session = await auth();
   if (session && (await checkProfileSetup(session.user?.id))) {
     redirect("/dashboard")
