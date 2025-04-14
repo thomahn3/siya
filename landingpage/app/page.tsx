@@ -1,4 +1,3 @@
-
 import SubscribeForm from "@/components/emailForm";
 import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
@@ -27,7 +26,12 @@ export default async function Home() {
 
   return (
     <main className="overflow-x-hidden">
+
       <Header>
+        <div className="ml-auto flex items-center space-x-4">
+          <Button asChild variant="headerLink">
+            <Link href='mailto:SIYAinquiries@gmail.com'>Contact</Link>
+          </Button>
           <div className='space-x-2'>
             <Button asChild variant="default" className='rounded-full'>
                 <Link href='/sign-in'>Sign In</Link>
@@ -36,10 +40,9 @@ export default async function Home() {
                 <Link href='/sign-up'>Sign Up</Link>
             </Button>
           </div>
-          <Button asChild variant="headerLink">
-            <Link href='mailto:SIYAinquiries@gmail.com'>Contact</Link>
-          </Button>
-        </Header>
+        </div>
+      </Header>
+
       <section className="py-10 lg:py-20">
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col lg:flex-row items-center w-full">
