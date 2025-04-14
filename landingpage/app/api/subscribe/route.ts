@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const encryptedEmail = encryptEmail(email);
 
     await prisma.subscriber.create({
-      data: { email: encryptedEmail },
+      data: { email: email },
     });
 
     return NextResponse.json({ success: true, message: "Email subscribed successfully!" });
