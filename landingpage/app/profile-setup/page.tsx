@@ -20,7 +20,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { profileSetup } from '@/lib/actions'
+import { profileSetup, userRedirect } from '@/lib/actions'
   
 
 const Page = async () => {
@@ -61,7 +61,7 @@ return (
                                     "use server";
                                     const res = await profileSetup(formData);
                                     if (res.success) {
-                                        redirect("/dashboard");
+                                        redirect(await userRedirect({ session }) ?? "");
                                     }
                                 }}
                                 >

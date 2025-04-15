@@ -12,20 +12,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { signUp } from "@/lib/actions";
+import { signUp, userRedirect } from "@/lib/actions";
 import Logo from "@/components/ui/logo";
 import { auth } from '@/lib/auth'
 import { checkProfileSetup } from '@/lib//actions';
-import SignUpForm from "@/components/signUpForm";
-import OAuthForm from "@/components/oAuthForm";
+import SignUpForm from "@/components/sign-up-form";
+import OAuthForm from "@/components/o-auth-form";
 
 const Page = async () => {
   
   const session = await auth();
-  if (session && !(await checkProfileSetup(session.user?.id))) {
-    redirect("/profile-setup")
-  } else if (session && (await checkProfileSetup(session.user?.id))) {
-    redirect("/dashboard")
+  let url = session ? await userRedirect({ session }) : null;
+
+  if (session && url) {
+    redirect(url);
   }
 
   return (

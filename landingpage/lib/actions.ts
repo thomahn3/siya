@@ -5,6 +5,8 @@ import db from './db/db';
 import { schema, profileSetupSchema } from './schema';
 import { auth, signIn } from '@/lib/auth';
 import { encrypt } from '@/utils/encryption';
+import { Session } from 'next-auth'; // Import Session type from next-auth
+import { redirect } from 'next/navigation';
 
 
 export const signUp = async (formData: FormData) => {
@@ -95,4 +97,37 @@ export const profileSetup = async (formData: FormData) => {
     },
     successMessage: "Profile setup completed",
   });
+}
+
+export async function userRedirect({ session }: { session: Session | null }, useType: boolean = false) {
+
+  
+  if (session) {
+    let url = ""
+    const user = await db.user.findUnique({
+      where: { id: session.user?.id }, // Search for the user by id
+      select: { appUseType: true }, // Retrieve the appUseType field
+    });
+
+    if (useType) {
+      var appUseType = user?.appUseType as string | undefined; // Ensure appUseType is treated as a string
+      return appUseType
+    }
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (session && await checkProfileSetup(session.user?.id) && appUseType === "offer") {
+      url = "/dashboard-contractor"
+    } else if (session && await checkProfileSetup(session.user?.id) && appUseType === "request") {
+      url = "/dashboard-customer"
+    } else if (session && !await checkProfileSetup(session.user?.id)) {
+      url = "/profile-setup" 
+    }
+
+    return url as string
+  }
+
+    
 }

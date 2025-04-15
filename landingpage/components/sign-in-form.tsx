@@ -4,16 +4,17 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useActionState } from 'react'
-import { signInServer } from '@/lib/actions';
+import { signInServer, userRedirect } from '@/lib/actions';
 import { CircleAlertIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Session } from 'next-auth';
 
 
 const initialState = {
     message: '',
   }
 
-export default function SignInForm() {
+export default function SignInForm({ url }: { url: string }) {
 
 const router = useRouter()
 const [state, formAction, pending] = useActionState(
@@ -21,7 +22,7 @@ const [state, formAction, pending] = useActionState(
     async (state: { message: string }, formData: FormData) => {
         try {
           await signInServer('credentials', formData);
-          router.push('/dashboard')
+          router.push(url)
           return { message: '' }; // Clear the error message on success
         } catch (e) {
           // Map the error message to a custom string

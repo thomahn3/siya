@@ -1,4 +1,4 @@
-import SubscribeForm from "@/components/emailForm";
+import SubscribeForm from "@/components/email-form";
 import Header from "@/components/ui/header";
 import { Waypoints } from 'lucide-react';
 import { UserRoundSearch } from 'lucide-react';
@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { auth } from '@/lib/auth'
-import { checkProfileSetup } from "@/lib/actions";
+import { checkProfileSetup, userRedirect } from "@/lib/actions";
 import FadeInLeft from "@/components/fade-in-left";
 
 
@@ -19,8 +19,10 @@ import FadeInLeft from "@/components/fade-in-left";
 export default async function Home() {
 
   const session = await auth();
-  if (session && (await checkProfileSetup(session.user?.id))) {
-    redirect("/dashboard")
+  let url = session ? await userRedirect({ session }) : null;
+
+  if (session && url) {
+    redirect(url);
   }
 
 
