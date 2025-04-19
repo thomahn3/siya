@@ -25,7 +25,7 @@ export default function OAuthForm() {
   const handleOAuthSignIn = (provider: string) => {
     setPending(true); // Set pending state
     startTransition(async () => {
-        await signIn(provider);
+      await signIn(provider); // Redirect to the root or appropriate page
     });
   };
 

@@ -20,12 +20,13 @@ import SignUpForm from "@/components/sign-up-form";
 import OAuthForm from "@/components/o-auth-form";
 
 const Page = async () => {
-  
   const session = await auth();
-  let url = session ? await userRedirect({ session }) : null;
 
-  if (session && url) {
-    redirect(url);
+  if (session) {
+    const url = await userRedirect({ session });
+    if (url) {
+      redirect(url); // Ensure redirection happens after OAuth sign-up
+    }
   }
 
   return (

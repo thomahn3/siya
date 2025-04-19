@@ -100,34 +100,32 @@ export const profileSetup = async (formData: FormData) => {
 }
 
 export async function userRedirect({ session }: { session: Session | null }, useType: boolean = false) {
-
-  
   if (session) {
-    let url = ""
     const user = await db.user.findUnique({
-      where: { id: session.user?.id }, // Search for the user by id
-      select: { appUseType: true }, // Retrieve the appUseType field
+      where: { id: session.user?.id },
+      select: { appUseType: true },
     });
-
-    if (useType) {
-      var appUseType = user?.appUseType as string | undefined; // Ensure appUseType is treated as a string
-      return appUseType
-    }
 
     if (!user) {
       throw new Error("User not found");
     }
 
-    if (session && await checkProfileSetup(session.user?.id) && appUseType === "offer") {
-      url = "/dashboard-contractor"
-    } else if (session && await checkProfileSetup(session.user?.id) && appUseType === "request") {
-      url = "/dashboard-customer"
-    } else if (session && !await checkProfileSetup(session.user?.id)) {
-      url = "/profile-setup" 
+    const appUseType = user?.appUseType as string | undefined;
+
+    if (useType) {
+      return appUseType; // Return appUseType if requested
     }
 
-    return url as string
+    if (await checkProfileSetup(session.user?.id)) {
+      if (appUseType === "offer") {
+        return "/dashboard-contractor";
+      } else if (appUseType === "request") {
+        return "/dashboard-customer";
+      }
+    }
+
+    return "/profile-setup"; // Fallback for incomplete profiles
   }
 
-    
+  return null; // Return null if no session is found
 }

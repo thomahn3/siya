@@ -17,10 +17,11 @@ import OAuthForm from "@/components/o-auth-form";
 const Page = async () => {
   const session = await auth();
 
-  let url = session ? await userRedirect({ session }) : null;
-
-  if (session && url) {
-    redirect(url);
+  if (session) {
+    var url = await userRedirect({ session });
+    if (url) {
+      redirect(url); // Ensure redirection happens after OAuth sign-in
+    }
   }
 
   return (
