@@ -3,7 +3,7 @@
 import { executeAction } from './executeActions';
 import db from './db/db';
 import { schema, profileSetupSchema } from './schema';
-import { auth, signIn } from '@/lib/auth';
+import { auth, signIn, signOut } from '@/lib/auth';
 import { encrypt } from '@/utils/encryption';
 import { Session } from 'next-auth'; // Import Session type from next-auth
 import { redirect } from 'next/navigation';
@@ -53,6 +53,11 @@ export const signInServer = async (type: string, formdata?: FormData) => {
     }
   }
 };  
+
+export const signOutServer = async () => {
+    await signOut({ redirect: false });
+    redirect("/");
+};
 
 export const checkProfileSetup = async (id: string | undefined) => {
     const user = await db.user.findUnique({

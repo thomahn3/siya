@@ -1,13 +1,15 @@
 'use client';
 
-import { LayoutDashboard, UserRoundSearch, SquarePlus, Inbox, CircleUserRound } from 'lucide-react';
+import { LayoutDashboard, UserRoundSearch, SquarePlus, Inbox, CircleUserRound, Power } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+import { Session } from 'next-auth';
+import { signOutServer } from '@/lib/actions';
 
 // Map of links to display in the side navigation.
 
-export default function NavLinksCustomer({ userType }: { userType: string }) {
+export default function NavLinks({ session, userType }: { session: Session | null; userType: string }) {
     const pathname = usePathname();
 
     let links: any[] = [];
@@ -18,7 +20,7 @@ export default function NavLinksCustomer({ userType }: { userType: string }) {
             { name: 'Find a Contractor', href: '/offer-job/posts', icon: UserRoundSearch },
             { name: 'Make a Post', href: '/request-job', icon: SquarePlus },
             { name: 'Inbox', href: '/inbox', icon: Inbox },
-            { name: 'Profile', href: '/profile', icon: CircleUserRound},
+            { name: 'Profile', href: `/users/${session?.user?.id}`, icon: CircleUserRound},
         ];
     } else if (userType === 'offer') {
         links = [
@@ -26,7 +28,7 @@ export default function NavLinksCustomer({ userType }: { userType: string }) {
             { name: 'Find Customers', href: '/request-job/posts', icon: UserRoundSearch },
             { name: 'Make a Post', href: '/offer-job', icon: SquarePlus },
             { name: 'Inbox', href: '/inbox', icon: Inbox },
-            { name: 'Profile', href: '/profile', icon: CircleUserRound},
+            { name: 'Profile', href: `/users/${session?.user?.id}`, icon: CircleUserRound},
         ];
     }
 
@@ -52,4 +54,19 @@ export default function NavLinksCustomer({ userType }: { userType: string }) {
             })}
         </>
     );
+}
+
+export function SignOut() {
+    return (
+        <form
+          action={async () => {
+            await signOutServer()
+          }}
+        >
+          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-green-100 hover:text-green-500 md:flex-none md:justify-start md:p-2 md:px-3">
+            <Power className="w-6" />
+            <div className="hidden md:block">Sign Out</div>
+          </button>
+        </form>
+    )
 }
