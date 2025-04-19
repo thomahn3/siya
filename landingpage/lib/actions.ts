@@ -4,7 +4,7 @@ import { executeAction } from './executeActions';
 import db from './db/db';
 import { schema, profileSetupSchema } from './schema';
 import { auth, signIn, signOut } from '@/lib/auth';
-import { encrypt } from '@/utils/encryption';
+import { hashPassword } from '@/utils/encryption';
 import { Session } from 'next-auth'; // Import Session type from next-auth
 import { redirect } from 'next/navigation';
 
@@ -13,29 +13,32 @@ export const signUp = async (formData: FormData) => {
   const email = formData.get("email");
   const password = formData.get("password");
   const validatedData = schema.parse({ email, password });
-  const encryptedPassword = await encrypt(validatedData.password);
+  const hashedPassword = await hashPassword(validatedData.password);
+
   try {
-  const user = await db.user.findFirst({
-    where: {
-      email: validatedData.email,
-    },
-  });
-  if (user) {
-    console.log("User Aready Exists")
-    throw new Error('User already exists', { cause: { server_message: "User already exists." }})
-  } else {
-    await db.user.create({
-      data: {
-        email: validatedData.email.toLocaleLowerCase(),
-        password: encryptedPassword,
+    const user = await db.user.findFirst({
+      where: {
+        email: validatedData.email,
       },
     });
-    await signIn('credentials', formData);
-  }
+
+    if (user) {
+      throw new Error('User already exists', { cause: { server_message: "User already exists." } });
+    } else {
+      await db.user.create({
+        data: {
+          email: validatedData.email.toLowerCase(),
+          hashedpassword: hashedPassword, // Ensure this matches the schema
+        },
+      });
+
+      await signIn('credentials', formData);
+    }
   } catch (e) {
+    console.error("Error in signUp:", e); // Log the error for debugging
     if (e instanceof Error) {
       if (e.cause && typeof e.cause === "object" && "server_message" in e.cause) {
-        throw new Error(typeof e.cause.server_message === "string" ? e.cause.server_message : "An unknown error occurred")
+        throw new Error(typeof e.cause.server_message === "string" ? e.cause.server_message : "An unknown error occurred");
       }
     }
   }

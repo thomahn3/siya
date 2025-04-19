@@ -8,7 +8,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import { schema } from "@/lib/schema";
 import Google from "next-auth/providers/google"
-import { compare } from '@/utils/encryption';
+import { verifyPassword } from '@/utils/encryption';
 
 const adapter = PrismaAdapter(db);
 
@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Credentials({
       credentials: {
         email: {},
-        password: {},
+        hashedpassword: {},
       },
       authorize: async (credentials) => {
         const validatedCredentials = schema.parse(credentials);
@@ -43,13 +43,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error('No user', { cause: { server_message: "Invalid email or password" }});
         }
 
-        if (!user.password) {
+        if (!user.hashedpassword) {
           throw new Error('No password', { cause: { server_message: "This email was used to sign in with a 3rd party app" }});
         }
 
-        const isPasswordValid = compare(
+        const isPasswordValid = await verifyPassword(
           validatedCredentials.password,
-          user.password
+          user.hashedpassword
         );
 
         if (!isPasswordValid) {

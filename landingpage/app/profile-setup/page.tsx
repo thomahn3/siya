@@ -100,7 +100,7 @@ return (
                                 />
                                 </div>
                                 <div className='grid gap-2'>
-                                <Label htmlFor="postcode">PostCode</Label>
+                                <Label htmlFor="postcode">Postcode</Label>
                                 <Input 
                                     name="postcode"
                                     placeholder="Postcode"
