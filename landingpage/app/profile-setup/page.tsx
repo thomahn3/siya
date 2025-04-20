@@ -12,7 +12,7 @@ import {
   } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Logo from '@/components/ui/logo';
-import { Label } from '@radix-ui/react-label';
+import { Label } from '@/components/ui/label'
 import {
     Select,
     SelectContent,
@@ -20,7 +20,8 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { profileSetup, userRedirect } from '@/lib/actions'
+import { userRedirect } from '@/lib/actions'
+import { profileSetup } from "@/lib/data";
   
 
 const Page = async () => {

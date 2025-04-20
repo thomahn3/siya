@@ -6,6 +6,18 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { Session } from 'next-auth';
 import { signOutServer } from '@/lib/actions';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
+import { sign } from 'crypto';
 
 // Map of links to display in the side navigation.
 
@@ -20,7 +32,7 @@ export default function NavLinks({ session, userType }: { session: Session | nul
             { name: 'Find a Contractor', href: '/offer-job/posts', icon: UserRoundSearch },
             { name: 'Make a Post', href: '/request-job', icon: SquarePlus },
             { name: 'Inbox', href: '/inbox', icon: Inbox },
-            { name: 'Profile', href: `/users/${session?.user?.id}`, icon: CircleUserRound},
+            { name: 'Profile', href: `/account/${session?.user?.id}`, icon: CircleUserRound},
         ];
     } else if (userType === 'offer') {
         links = [
@@ -28,7 +40,7 @@ export default function NavLinks({ session, userType }: { session: Session | nul
             { name: 'Find Customers', href: '/request-job/posts', icon: UserRoundSearch },
             { name: 'Make a Post', href: '/offer-job', icon: SquarePlus },
             { name: 'Inbox', href: '/inbox', icon: Inbox },
-            { name: 'Profile', href: `/users/${session?.user?.id}`, icon: CircleUserRound},
+            { name: 'Profile', href: `/account/${session?.user?.id}`, icon: CircleUserRound},
         ];
     }
 
@@ -56,17 +68,34 @@ export default function NavLinks({ session, userType }: { session: Session | nul
     );
 }
 
-export function SignOut() {
+export async function SignOut() {
+
     return (
-        <form
-          action={async () => {
-            await signOutServer()
-          }}
-        >
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-green-100 hover:text-green-500 md:flex-none md:justify-start md:p-2 md:px-3">
-            <Power className="w-6" />
-            <div className="hidden md:block">Sign Out</div>
-          </button>
-        </form>
+        <AlertDialog>
+            <AlertDialogTrigger asChild>
+                    <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-green-100 hover:text-green-500 md:flex-none md:justify-start md:p-2 md:px-3">
+                        <Power className="w-6" />
+                        <div className="hidden md:block">Sign Out</div>
+                    </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        You will be signed out of your account and redirected to the sign-in page.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction 
+                        onClick={async () => {
+                            await signOutServer();
+                        }}
+                    >
+                        Continue
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     )
 }

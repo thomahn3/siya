@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Credentials({
       credentials: {
         email: {},
-        hashedpassword: {},
+        hashedPassword: {},
       },
       authorize: async (credentials) => {
         const validatedCredentials = schema.parse(credentials);
@@ -43,13 +43,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error('No user', { cause: { server_message: "Invalid email or password" }});
         }
 
-        if (!user.hashedpassword) {
+        if (!user.hashedPassword) {
           throw new Error('No password', { cause: { server_message: "This email was used to sign in with a 3rd party app" }});
         }
 
         const isPasswordValid = await verifyPassword(
           validatedCredentials.password,
-          user.hashedpassword
+          user.hashedPassword
         );
 
         if (!isPasswordValid) {

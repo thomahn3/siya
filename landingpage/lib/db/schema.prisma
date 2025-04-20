@@ -18,7 +18,7 @@ model User {
   name             String?
   email            String?         @unique
   emailVerified    DateTime?
-  hashedpassword   String?
+  hashedPassword   String?
   phone            String?
   phoneVerified    DateTime?
   postcode         String?
@@ -32,6 +32,16 @@ model User {
   accounts         Account[]
   Authenticator    Authenticator[]
   sessions         Session[]
+  offerJobs            OfferJob[]
+  requestJobs          RequestJob[]
+  
+  reviewer Review[] @relation("ReviewerRelation")
+
+  reviewee Review[] @relation("RevieweeRelation")
+
+  payAmounts Payemnts[] @relation("Payer")
+
+  payedAmounts Payemnts[] @relation("Payed")
 }
 
 model Account {
@@ -84,4 +94,63 @@ model Authenticator {
   user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  reviewer    User     @relation("ReviewerRelation", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewerId  String
+  reviewee    User     @relation("RevieweeRelation", fields: [revieweeId], references: [id], onDelete: Cascade)
+  revieweeId  String
+  job         RequestJob @relation("RequestJobReviews", fields: [jobId], references: [id], onDelete: Cascade)
+  jobId       String
+  offerJob    OfferJob   @relation("OfferJobReviews", fields: [offerJobId], references: [id], onDelete: Cascade)
+  offerJobId  String
+  rating      Int
+  comment     String?
+  createdAt   DateTime @default(now())
+}
+
+model OfferJob {
+  id          String   @id @default(cuid())
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId      String
+  title       String
+  description String
+  reviews     Review[] @relation("OfferJobReviews")
+  location    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RequestJob {
+  id          String   @id @default(cuid())
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+  title       String
+  description String
+  location   String
+  reviews     Review[] @relation("RequestJobReviews")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Payemnts {
+  id          String   @id @default(cuid())
+  payer     User     @relation("Payer", fields: [payerId], references: [id], onDelete: Cascade)
+  payerId     String
+  payedUser User     @relation("Payed", fields: [payedUserId], references: [id], onDelete: Cascade)
+  payedUserId String
+  amount      Float
+  commision   Float
+  payout     Float
+  status      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Services {
+  id          Int     @id @default(autoincrement())
+  name        String
+  createdAt   DateTime @default(now())
 }

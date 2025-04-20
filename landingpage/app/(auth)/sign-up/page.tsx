@@ -16,8 +16,8 @@ import { signUp, userRedirect } from "@/lib/actions";
 import Logo from "@/components/ui/logo";
 import { auth } from '@/lib/auth'
 import { checkProfileSetup } from '@/lib//actions';
-import SignUpForm from "@/components/sign-up-form";
-import OAuthForm from "@/components/o-auth-form";
+import SignUpForm from "@/components/auth/sign-up-form";
+import OAuthForm from "@/components/auth/o-auth-form";
 
 const Page = async () => {
   const session = await auth();

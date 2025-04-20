@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/card";
 import Logo from "@/components/ui/logo";
 import { checkProfileSetup, userRedirect } from "@/lib/actions";
-import SignInForm from "@/components/sign-in-form";
-import OAuthForm from "@/components/o-auth-form";
+import SignInForm from "@/components/auth/sign-in-form";
+import OAuthForm from "@/components/auth/o-auth-form";
 
 const Page = async () => {
   const session = await auth();

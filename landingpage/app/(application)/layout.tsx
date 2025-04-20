@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import Header from '@/components/ui/header'
 import SideNav from "@/components/side-nav";
 import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  if (!session) {
+    redirect('/sign-in')
+  }
 
   return (
   <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">

@@ -3,8 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { signIn } from 'next-auth/react'; // Use next-auth's client-side signIn
 import { CircleAlertIcon } from 'lucide-react';
-import { GithubIcon } from './ui/github';
-import { GoogleIcon } from './ui/google';
+import { GithubIcon } from '@/components/ui/github';
+import { GoogleIcon } from '@/components/ui/google';
 import { useState, startTransition, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 

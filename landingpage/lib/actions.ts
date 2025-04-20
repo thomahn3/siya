@@ -1,4 +1,4 @@
-"use server";
+'use server';
 
 import { executeAction } from './executeActions';
 import db from './db/db';
@@ -28,7 +28,7 @@ export const signUp = async (formData: FormData) => {
       await db.user.create({
         data: {
           email: validatedData.email.toLowerCase(),
-          hashedpassword: hashedPassword, // Ensure this matches the schema
+          hashedPassword: hashedPassword, // Ensure this matches the schema
         },
       });
 
@@ -59,7 +59,7 @@ export const signInServer = async (type: string, formdata?: FormData) => {
 
 export const signOutServer = async () => {
     await signOut({ redirect: false });
-    redirect("/");
+    redirect("/sign-in");
 };
 
 export const checkProfileSetup = async (id: string | undefined) => {
@@ -73,39 +73,6 @@ export const checkProfileSetup = async (id: string | undefined) => {
     }
     return user.profileCompleted; // Return the profileCompleted value
 };
-
-export const profileSetup = async (formData: FormData) => {
-  return executeAction({
-    actionFn: async () => {
-      const session = await auth();
-      if (session) {
-        const id = session.user?.id;
-        const name = formData.get("name");
-        const phone = formData.get("phone");
-        const postcode = formData.get("postcode");
-        const abn = formData.get("abn");
-        const appUseType = formData.get("appUseType");
-        const entityType = formData.get("entityType");
-
-        const validatedData = profileSetupSchema.parse({ id, name, phone, postcode, abn, appUseType, entityType });
-
-        await db.user.update({
-          where: { id: id },
-          data: {
-            name: validatedData.name,
-            phone: validatedData.phone,
-            postcode: validatedData.postcode,
-            abn: validatedData.abn,
-            appUseType: validatedData.appUseType,
-            entityType: validatedData.entityType,
-            profileCompleted: true,
-          },
-        });
-      }
-    },
-    successMessage: "Profile setup completed",
-  });
-}
 
 export async function userRedirect({ session }: { session: Session | null }, useType: boolean = false) {
   if (session) {
