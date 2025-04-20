@@ -4,6 +4,9 @@ import { auth } from "@/lib/auth";
 import { getUserData } from "@/lib/data";
 import { redirect } from "next/navigation";
 import { userDataSchema } from "@/lib/schema";
+import { SignOut } from "@/components/auth/sign-out";
+import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
 
 export default async function Page({ params }: { params: Promise<{ userid: string }> }) {
     const session = await auth();
@@ -17,8 +20,8 @@ export default async function Page({ params }: { params: Promise<{ userid: strin
     const data = userDataSchema.parse(rawData);
 
     return (
-        <div className="justify-center items-center">
-            <ProfileCard session={session} data={data} />
+        <div className="flex-col justify-center items-center">
+            <ProfileCard session={session} data={data} />        
         </div>
     );
 }

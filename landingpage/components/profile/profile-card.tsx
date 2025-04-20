@@ -1,10 +1,15 @@
-import React from "react";
+'use client';
+
+import React, { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Session } from "next-auth";
 import { z } from "zod";
 import { userDataSchema } from "@/lib/schema";
 import { Input } from "@/components/ui/input";
 import { Label } from '@/components/ui/label'
+import { Button } from "../ui/button";
+import { Pencil, Save } from "lucide-react";
+import { SignOut } from "../auth/sign-out";
 
 interface ProfileCardProps {
     session: Session;
@@ -12,9 +17,28 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ session, data }: ProfileCardProps) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({
+        name: data.name,
+        phone: data.phone,
+        postcode: data.postcode,
+        abn: data.abn || "",
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSave = () => {
+        // Call a function to update the database with formData
+        console.log("Saving data:", formData);
+        setIsEditing(false);
+    };
+
     return (
         <Card className="max-w-md mx-auto shadow-md">
-            <CardHeader>
+            <CardHeader> 
                 <CardTitle className="text-[32px]">Your Profile</CardTitle>
             </CardHeader>
             <CardContent>
@@ -22,19 +46,20 @@ export default function ProfileCard({ session, data }: ProfileCardProps) {
                     <div className="grid gap-2">
                         <Label className="">Name</Label>
                         <Input
-                            name="Name"
-                            type="name"
-                            defaultValue={data.name}
-                            readOnly
+                            name="name"
+                            type="text"
+                            value={formData.name}
+                            readOnly={!isEditing}
+                            onChange={handleInputChange}
                             required
                             autoComplete="name"
-                            className="text-gray-500"
+                            className={isEditing ? "" : "text-gray-500"}
                         />
                     </div>
                     <div className="grid gap-2">
                         <Label>Email</Label>
                         <Input
-                            name="Email"
+                            name="email"
                             type="email"
                             defaultValue={data.email}
                             readOnly
@@ -46,36 +71,39 @@ export default function ProfileCard({ session, data }: ProfileCardProps) {
                     <div className="grid gap-2">
                         <Label>Phone</Label>
                         <Input
-                            name="Phone"
+                            name="phone"
                             type="tel"
-                            defaultValue={data.phone}
-                            readOnly
+                            value={formData.phone}
+                            readOnly={!isEditing}
+                            onChange={handleInputChange}
                             required
                             autoComplete="tel"
-                            className="text-gray-500"
+                            className={isEditing ? "" : "text-gray-500"}
                         />
                     </div>
                     <div className="grid gap-2">
                         <Label>Postcode</Label>
                         <Input
-                            name="Postcode"
+                            name="postcode"
                             type="text"
-                            defaultValue={data.postcode}
-                            readOnly
+                            value={formData.postcode}
+                            readOnly={!isEditing}
+                            onChange={handleInputChange}
                             required
                             autoComplete="postal-code"
-                            className="text-gray-500"
+                            className={isEditing ? "" : "text-gray-500"}
                         />
                     </div>
                     <div className="grid gap-2">
                         <Label>ABN</Label>
                         <Input
-                            name="ABN"
+                            name="abn"
                             type="text"
-                            defaultValue={data.abn || ""}
-                            readOnly
+                            value={formData.abn}
+                            readOnly={!isEditing}
+                            onChange={handleInputChange}
                             required
-                            className="text-gray-500"
+                            className={isEditing ? "" : "text-gray-500"}
                         />
                     </div>
                     <p><strong>App Use Type:</strong> {(data.appUseType).replace(/(\w)(\w*)/g,
@@ -85,7 +113,22 @@ export default function ProfileCard({ session, data }: ProfileCardProps) {
                 </div>
             </CardContent>
             <CardFooter>
-                <span className="text-sm text-gray-500">Last updated: {new Date().toLocaleTimeString()}</span>
+                <div className="flex flex-row items-center justify-between w-full">
+                    <span className="text-sm text-gray-500">Last updated: {new Date().toLocaleTimeString()}</span>
+                    <div className="flex gap-2 ml-auto">
+                        {isEditing ? (
+                            <Button variant="secondary" className="cursor-pointer" onClick={handleSave}>
+                                <Save className="w-6"/> Save
+                            </Button>
+                        ) : (
+                            <Button variant="secondary" className="cursor-pointer" onClick={() => setIsEditing(true)}>
+                                <Pencil className="w-6"/>
+                                Edit
+                            </Button>
+                        )}
+                        <SignOut />
+                    </div>
+                </div>
             </CardFooter>
         </Card>
     );

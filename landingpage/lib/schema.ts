@@ -8,9 +8,9 @@ export const schema = z.object({
 export const profileSetupSchema = z.object({
     id: z.string().min(1),
     name: z.string().min(1),
-    phone: z.string().min(1),
+    phone: z.number().min(1),
     postcode: z.string().min(1),
-    abn: z.string() || null,
+    abn: z.union([z.number().refine(num => num.toString().length === 11, { message: "Must be 11 digits" }), z.null()]),
     appUseType: z.enum(['offer', 'request']),
     entityType: z.enum(['personal', 'business']),
 })
@@ -19,9 +19,9 @@ export const userDataSchema = z.object({
     id: z.string().min(1),
     name: z.string().min(1),
     email: z.string().email(),
-    phone: z.string().min(1),
+    phone: z.number().min(1),
     postcode: z.string().min(1),
-    abn: z.string() || null,
+    abn: z.union([z.number().refine(num => num.toString().length === 11, { message: "Must be 11 digits" }), z.null()]),
     appUseType: z.enum(['offer', 'request']),
     entityType: z.enum(['personal', 'business']),
     reviewee: z.array(z.object({

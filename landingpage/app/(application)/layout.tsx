@@ -26,7 +26,7 @@ export default async function RootLayout({
 
   return (
   <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-    <div className="w-full flex-none md:w-64">
+    <div className="w-full flex-none md:w-64 order-last md:order-first sticky bottom-0 md:static">
       <SideNav session={session}/>
     </div>
     <div className="flex-grow p-6 md:overflow-y-auto md:p-12">

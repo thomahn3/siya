@@ -7,37 +7,42 @@ import { profileSetupSchema } from "@/lib/schema";
 import { Session } from "next-auth";
 
 export const profileSetup = async (formData: FormData) => {
-    return executeAction({
-      actionFn: async () => {
-        const session = await auth();
-        if (session) {
-          const id = session.user?.id;
-          const name = formData.get("name");
-          const phone = formData.get("phone");
-          const postcode = formData.get("postcode");
-          const abn = formData.get("abn");
-          const appUseType = formData.get("appUseType");
-          const entityType = formData.get("entityType");
-  
-          const validatedData = profileSetupSchema.parse({ id, name, phone, postcode, abn, appUseType, entityType });
-  
-          await db.user.update({
-            where: { id: id },
-            data: {
-              name: validatedData.name,
-              phone: validatedData.phone,
-              postcode: validatedData.postcode,
-              abn: validatedData.abn,
-              appUseType: validatedData.appUseType,
-              entityType: validatedData.entityType,
-              profileCompleted: true,
-            },
-          });
-        }
-      },
-      successMessage: "Profile setup completed",
-    });
-  }
+    const session = await auth();
+    if (session) {
+      const id = session.user?.id;
+      const name = formData.get("name");
+      const phone = parseInt(formData.get("phone") as string, 10);
+      const postcode = formData.get("postcode");
+      const abn = formData.get("abn") ? parseInt(formData.get("abn") as string, 10) : null;
+      const appUseType = formData.get("appUseType");
+      const entityType = formData.get("entityType");
+
+
+      let validatedData = null;
+      try {
+        validatedData = profileSetupSchema.parse({ id, name, phone, postcode, abn, appUseType, entityType });
+      } catch (error) {
+        console.log("Validation Error:", error);
+      }
+
+      if (validatedData) {
+        await db.user.update({
+          where: { id: id },
+          data: {
+            name: validatedData.name,
+            phone: validatedData.phone,
+            postcode: validatedData.postcode,
+            abn: validatedData.abn,
+            appUseType: validatedData.appUseType,
+            entityType: validatedData.entityType,
+            profileCompleted: true,
+          },
+        });
+        return true
+      }
+      
+    }
+}
 
 export async function getUserData(session: Session | null) {
     if (session) {

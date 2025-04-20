@@ -60,8 +60,14 @@ return (
                                 className="space-y-4"
                                 action={async (formData) => {
                                     "use server";
+                                    // Convert phone and abn to numbers
+                                    const phone = parseInt(formData.get("phone") as string, 10);
+                                    const abn = formData.get("abn") ? parseInt(formData.get("abn") as string, 10) : null;
+                                    formData.set("phone", phone.toString());
+                                    if (abn !== null) formData.set("abn", abn.toString());
+
                                     const res = await profileSetup(formData);
-                                    if (res.success) {
+                                    if (res) {
                                         redirect(await userRedirect({ session }) ?? "");
                                     }
                                 }}
