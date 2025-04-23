@@ -99,7 +99,6 @@ export async function userRedirect({ session }: { session: Session | null }, use
       }
     }
 
-    return "/profile-setup"; // Fallback for incomplete profiles
   }
 
   return null; // Return null if no session is found

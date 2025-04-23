@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { SignOut } from '@/components/auth/sign-out';
 import { checkProfileSetup, userRedirect } from '@/lib/actions';
+import { revalidatePath } from 'next/cache';
 
 
 const Page = async () => {
